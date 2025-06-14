@@ -31,10 +31,11 @@
 #endif
 
 #ifdef SEAL_USE___BUILTIN_CLZLL
-#define SEAL_MSB_INDEX_UINT64(result, value)                                 \
-    {                                                                        \
-        *result = 63UL - static_cast<unsigned long>(__builtin_clzll(value)); \
-    }
+#define SEAL_MSB_INDEX_UINT64(result, value)                                      \
+    do                                                                            \
+    {                                                                             \
+        *result = 63UL - static_cast<unsigned long long>(__builtin_clzll(value)); \
+    } while (false)
 #endif
 
 #ifdef SEAL_USE___INT128
@@ -71,10 +72,24 @@ __extension__ typedef unsigned __int128 uint128_t;
 
 #ifdef SEAL_USE__ADDCARRY_U64
 #define SEAL_ADD_CARRY_UINT64(operand1, operand2, carry, result) _addcarry_u64(carry, operand1, operand2, result)
+#elif SEAL_USE___BUILTIN_ADDCLL
+#define SEAL_ADD_CARRY_UINT64(operand1, operand2, carry, result)           \
+    ({                                                                     \
+        unsigned long long carry_out = 0;                                  \
+        *result = __builtin_addcll(operand1, operand2, carry, &carry_out); \
+        carry_out;                                                         \
+    })
 #endif
 
 #ifdef SEAL_USE__SUBBORROW_U64
 #define SEAL_SUB_BORROW_UINT64(operand1, operand2, borrow, result) _subborrow_u64(borrow, operand1, operand2, result)
+#elif SEAL_USE___BUILTIN_SUBCLL
+#define SEAL_SUB_BORROW_UINT64(operand1, operand2, borrow, result)           \
+    ({                                                                       \
+        unsigned long long borrow_out = 0;                                   \
+        *result = __builtin_subcll(operand1, operand2, borrow, &borrow_out); \
+        borrow_out;                                                          \
+    })
 #endif
 
 #endif // SEAL_USE_INTRIN

@@ -37,10 +37,11 @@
 #endif
 
 #ifdef SEAL_USE___BUILTIN_CLZLL
-#define SEAL_MSB_INDEX_UINT64(result, value)                                 \
-    {                                                                        \
-        *result = 63UL - static_cast<unsigned long>(__builtin_clzll(value)); \
-    }
+#define SEAL_MSB_INDEX_UINT64(result, value)                                      \
+    do                                                                            \
+    {                                                                             \
+        *result = 63UL - static_cast<unsigned long long>(__builtin_clzll(value)); \
+    } while (false)
 #endif
 
 #ifdef SEAL_USE___INT128
@@ -51,7 +52,7 @@ __extension__ typedef unsigned __int128 uint128_t;
     {                                                                                       \
         *hw64 = static_cast<unsigned long long>(                                            \
             ((static_cast<uint128_t>(operand1) * static_cast<uint128_t>(operand2)) >> 64)); \
-    } while (false);
+    } while (false)
 
 #define SEAL_MULTIPLY_UINT64(operand1, operand2, result128)              \
     do                                                                   \

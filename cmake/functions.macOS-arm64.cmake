@@ -2,7 +2,7 @@
 # Licensed under the MIT license.
 
 # This cache-initialization file will be used to enable functions when cross-compiling
-# for iOS, as check_cxx_source_runs fails for cross-compilers.
+# for arm64 macOS, as check_cxx_source_runs fails for cross-compilers.
 
 set(SEAL_MEMSET_S_FOUND_EXITCODE
     "0"

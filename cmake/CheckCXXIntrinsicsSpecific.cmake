@@ -45,7 +45,7 @@ if(SEAL_USE_INTRIN)
         # Check for __builtin_clzll
         check_cxx_source_runs("
             int main() {
-                volatile auto res = __builtin_clzll(0);
+                volatile auto res = __builtin_clzll(1);
                 return 0;
             }"
             SEAL___BUILTIN_CLZLL_FOUND
@@ -63,6 +63,16 @@ if(SEAL_USE_INTRIN)
         SEAL__ADDCARRY_U64_FOUND
     )
 
+    # Check for __builtin_addcll
+    check_cxx_source_runs("
+        int main() {
+            unsigned long long a;
+            volatile auto res = __builtin_addcll(0,0,0,&a);
+            return 0;
+        }"
+        SEAL___BUILTIN_ADDCLL_FOUND
+    )
+
     # Check for _subborrow_u64
     check_cxx_source_runs("
         #include <${SEAL_INTRIN_HEADER}>
@@ -72,6 +82,16 @@ if(SEAL_USE_INTRIN)
             return 0;
         }"
         SEAL__SUBBORROW_U64_FOUND
+    )
+
+    # Check for __builtin_subcll
+    check_cxx_source_runs("
+        int main() {
+            unsigned long long a;
+            volatile auto res = __builtin_subcll(0,0,0,&a);
+            return 0;
+        }"
+        SEAL___BUILTIN_SUBCLL_FOUND
     )
 
     cmake_pop_check_state()
