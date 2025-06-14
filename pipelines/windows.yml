@@ -66,8 +66,7 @@ steps:
   displayName: 'Build SEALNet'
   inputs:
     solution: '$(Build.SourcesDirectory)/build/dotnet/SEALNet.sln'
-    msbuildArchitecture: 'x64'
-    platform: 'x64'
+    platform: 'Any CPU'
     configuration: '${{ parameters.configuration }}'
     msbuildVersion: 'latest'
 

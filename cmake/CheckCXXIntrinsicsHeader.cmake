@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation. All rights reserved.
 # Licensed under the MIT license.
 
-# Check for intrin.h or x86intrin.h
+# Check for intrinsics header files.
 if(SEAL_USE_INTRIN)
     set(CMAKE_REQUIRED_QUIET_OLD ${CMAKE_REQUIRED_QUIET})
     set(CMAKE_REQUIRED_QUIET ON)

@@ -7,6 +7,7 @@ steps:
       -S .
       -B build
       -GXcode
+      -DCMAKE_OSX_ARCHITECTURES=x86_64
       -DCMAKE_BUILD_TYPE=${{ parameters.configuration }}
       -DSEAL_BUILD_TESTS=ON
       -DSEAL_BUILD_SEAL_C=ON
@@ -19,6 +20,20 @@ steps:
     mkdir -p $BUILD_SOURCESDIRECTORY/lib/osx-x64
     cp build/lib/${{ parameters.configuration }}/libsealc.dylib $BUILD_SOURCESDIRECTORY/lib/osx-x64/
   displayName: 'Build SEAL native (x86_64)'
+
+- task: CMake@1
+  displayName: 'Configure SEAL (CMake)'
+  inputs:
+    workingDirectory: '$(Build.SourcesDirectory)'
+    cmakeArgs: >
+      -S .
+      -B build
+      -GXcode
+      -DCMAKE_OSX_ARCHITECTURES=arm64
+      -DCMAKE_BUILD_TYPE=${{ parameters.configuration }}
+      -DSEAL_BUILD_TESTS=ON
+      -DSEAL_BUILD_SEAL_C=ON
+      -DSEAL_BUILD_EXAMPLES=ON
 
 - script: |
     cmake --build build \
