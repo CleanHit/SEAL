@@ -31,10 +31,12 @@ steps:
       cd $BUILD_SOURCESDIRECTORY
       xcodebuild -project build-x64/SEAL.xcodeproj -sdk iphonesimulator -arch x86_64 -configuration ${{ parameters.configuration }} clean build
       mkdir -p $BUILD_SOURCESDIRECTORY/lib/iossimulator-x64
+      echo Copying x86_64 libraries from build-x64/lib/${{ parameters.configuration }}/
       cp build-x64/lib/${{ parameters.configuration }}/libseal*.a $BUILD_SOURCESDIRECTORY/lib/iossimulator-x64
 
       xcodebuild -project build-arm64/SEAL.xcodeproj -sdk iphonesimulator -arch arm64 -configuration ${{ parameters.configuration }} clean build
       mkdir -p $BUILD_SOURCESDIRECTORY/lib/iossimulator-arm64
+      echo Copying arm64 libraries from build-arm64/lib/${{ parameters.configuration }}/
       cp build-arm64/lib/${{ parameters.configuration }}/libseal*.a $BUILD_SOURCESDIRECTORY/lib/iossimulator-arm64
 
       cd lib
