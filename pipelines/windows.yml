@@ -90,6 +90,15 @@ steps:
 
 - ${{ if eq(parameters.configuration, 'Release') }}:
   - task: MSBuild@1
+    displayName: 'Restore SEALNet for iOS'
+    inputs:
+      solution: '$(Build.SourcesDirectory)/build/dotnet/src/SEALNet.csproj'
+      platform: 'Any CPU'
+      msbuildArguments: '/p:BuildIOS=true /t:Restore'
+      configuration: '${{ parameters.configuration }}'
+      msbuildVersion: 'latest'
+
+  - task: MSBuild@1
     displayName: 'Build SEALNet for iOS'
     inputs:
       solution: '$(Build.SourcesDirectory)/build/dotnet/src/SEALNet.csproj'
