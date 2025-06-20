@@ -22,7 +22,6 @@
     <file src="$NUGET_WINDOWS_SEAL_C_PATH$" target="runtimes/win-x64/native/" />
     <file src="$NUGET_LINUX_SEAL_C_PATH$" target="runtimes/linux-x64/native/" />
     <file src="$NUGET_MACOS_SEAL_C_PATH$" target="runtimes/osx/native/" />
-    <file src="$NUGET_MACOS_SEAL_C_PATH$" target="runtimes/osx/native/" />
     <file src="$NUGET_ANDROID_X64_SEAL_C_PATH$" target="runtimes/android-x64/native/" />
     <file src="$NUGET_ANDROID_ARM64_SEAL_C_PATH$" target="runtimes/android-arm64/native/" />
     <file src="$NUGET_IOSSIMULATOR_SEAL_C_PATH$" target="runtimes/iossimulator/native/" />
