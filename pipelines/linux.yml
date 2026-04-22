@@ -34,12 +34,10 @@ steps:
     projects: '**/SEALNetTest.csproj'
     arguments: '--configuration ${{ parameters.configuration }} --verbosity detailed'
 
-- task: CopyFiles@2
-  displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)'
-  inputs:
-      SourceFolder: '$(Build.SourcesDirectory)/build/lib'
-      Contents: 'libsealc.*'
-      TargetFolder: '$(Build.ArtifactStagingDirectory)/lib'
+- script: |
+      mkdir -p $(Build.ArtifactStagingDirectory)/lib
+      cp -L $(Build.SourcesDirectory)/build/lib/libsealc.so $(Build.ArtifactStagingDirectory)/lib/libsealc.so
+  displayName: 'Copy libsealc.so to: $(Build.ArtifactStagingDirectory)'
 
 - task: PublishBuildArtifacts@1
   displayName: 'Publish Artifact: drop'

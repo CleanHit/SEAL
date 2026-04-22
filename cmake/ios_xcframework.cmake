@@ -18,7 +18,7 @@
 #   WORK_DIR     Directory for intermediate build/install files.
 #                Default: <source>/out/ios-xcframework.
 
-cmake_minimum_required(VERSION 3.25)
+cmake_minimum_required(VERSION 3.22)
 
 # Defaults and path setup
 

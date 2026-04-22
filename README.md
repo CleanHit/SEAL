@@ -218,10 +218,10 @@ A global install requires elevated (root or administrator) privileges.
 | System | Toolchain |
 |---|---|
 | Windows | Visual Studio 2022 with C++ CMake Tools for Windows |
-| Linux | Clang++ (>= 5.0) or GNU G++ (>= 6.0), CMake (>= 3.25) |
-| macOS/iOS | Xcode toolchain (>= 9.3), CMake (>= 3.25) |
+| Linux | Clang++ (>= 5.0) or GNU G++ (>= 6.0), CMake (>= 3.22) |
+| macOS/iOS | Xcode toolchain (>= 9.3), CMake (>= 3.22) |
 | Android | Android Studio |
-| FreeBSD | CMake (>= 3.25) |
+| FreeBSD | CMake (>= 3.22) |
 
 **Note:** Microsoft SEAL compiled with Clang++ has much better runtime performance than one compiled with GNU G++.
 
