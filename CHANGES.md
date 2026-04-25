@@ -1,5 +1,14 @@
 # List of Changes
 
+## Version 4.3.0
+
+- Merged [(PR #734)](https://github.com/microsoft/SEAL/pull/734): Fixed `IterTuple` constructors that returned references to local temporaries.
+- Merged [(PR #738)](https://github.com/microsoft/SEAL/pull/738): Fixed out-of-bounds read in `Serialization_IsCompatibleVersion` and `Serialization_IsValidHeader` (C API).
+- Bumped .NET target framework from `net8.0` to `net10.0`.
+- Added `cmake/ios_xcframework.cmake` and a CI artifact that produces `libseal-<ver>.xcframework` and `libsealc-<ver>.xcframework` in one command.
+- Added `CMakePresets.json` for Windows, Linux, and macOS development.
+- No further releases will be published to NuGet.org. Users who want newer versions in .NET projects should build their own NuGet package from source.
+
 ## Version 4.2.0
 
 - Merged [(PR #729)](https://github.com/microsoft/SEAL/pull/729): Updated `zlib` and `zstd` versions.

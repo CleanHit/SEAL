@@ -1,26 +1,42 @@
 steps:
 - task: CMake@1
-  displayName: 'Configure SEAL for arm64'
+  displayName: 'Configure SEAL for iOS device (arm64)'
   inputs:
     workingDirectory: '$(Build.SourcesDirectory)'
     cmakeArgs: >
       -S .
-      -B build-arm64
+      -B build-device
       -GXcode
       -DSEAL_BUILD_SEAL_C=ON
       -DSEAL_BUILD_STATIC_SEAL_C=ON
       -DCMAKE_SYSTEM_NAME=iOS
+      -DCMAKE_OSX_SYSROOT=iphoneos
+      -DCMAKE_OSX_ARCHITECTURES=arm64
+      -C cmake/functions.ios.cmake
+
+- task: CMake@1
+  displayName: 'Configure SEAL for iOS simulator (arm64)'
+  inputs:
+    workingDirectory: '$(Build.SourcesDirectory)'
+    cmakeArgs: >
+      -S .
+      -B build-simulator
+      -GXcode
+      -DSEAL_BUILD_SEAL_C=ON
+      -DSEAL_BUILD_STATIC_SEAL_C=ON
+      -DCMAKE_SYSTEM_NAME=iOS
+      -DCMAKE_OSX_SYSROOT=iphonesimulator
       -DCMAKE_OSX_ARCHITECTURES=arm64
       -C cmake/functions.ios.cmake
 
 - script: |
       cd $BUILD_SOURCESDIRECTORY
-      xcodebuild -project build-arm64/SEAL.xcodeproj -sdk iphonesimulator -arch arm64 -configuration ${{ parameters.configuration }} clean build
+      xcodebuild -project build-simulator/SEAL.xcodeproj -sdk iphonesimulator -arch arm64 -configuration ${{ parameters.configuration }} clean build
       mkdir -p $BUILD_SOURCESDIRECTORY/lib/iossimulator
 
-      echo Copying arm64 libraries from build-arm64/lib/${{ parameters.configuration }}/
-      cp build-arm64/lib/${{ parameters.configuration }}/libseal-*.a $BUILD_SOURCESDIRECTORY/lib/iossimulator/libseal.a
-      cp build-arm64/lib/${{ parameters.configuration }}/libsealc-*.a $BUILD_SOURCESDIRECTORY/lib/iossimulator/libsealc.a
+      echo Copying arm64 libraries from build-simulator/lib/${{ parameters.configuration }}/
+      cp build-simulator/lib/${{ parameters.configuration }}/libseal-*.a $BUILD_SOURCESDIRECTORY/lib/iossimulator/libseal.a
+      cp build-simulator/lib/${{ parameters.configuration }}/libsealc-*.a $BUILD_SOURCESDIRECTORY/lib/iossimulator/libsealc.a
 
       echo Architectures for iossimulator/libseal.a
       lipo -info $BUILD_SOURCESDIRECTORY/lib/iossimulator/libseal.a
@@ -31,12 +47,12 @@ steps:
 
 - script: |
       cd $BUILD_SOURCESDIRECTORY
-      xcodebuild -project build-arm64/SEAL.xcodeproj -sdk iphoneos -arch arm64 -configuration ${{ parameters.configuration }} clean build
+      xcodebuild -project build-device/SEAL.xcodeproj -sdk iphoneos -arch arm64 -configuration ${{ parameters.configuration }} clean build
       mkdir -p $BUILD_SOURCESDIRECTORY/lib/ios
 
-      echo Copying arm64 libraries from build-arm64/lib/${{ parameters.configuration }}/
-      cp build-arm64/lib/${{ parameters.configuration }}/libseal-*.a $BUILD_SOURCESDIRECTORY/lib/ios/libseal.a
-      cp build-arm64/lib/${{ parameters.configuration }}/libsealc-*.a $BUILD_SOURCESDIRECTORY/lib/ios/libsealc.a
+      echo Copying arm64 libraries from build-device/lib/${{ parameters.configuration }}/
+      cp build-device/lib/${{ parameters.configuration }}/libseal-*.a $BUILD_SOURCESDIRECTORY/lib/ios/libseal.a
+      cp build-device/lib/${{ parameters.configuration }}/libsealc-*.a $BUILD_SOURCESDIRECTORY/lib/ios/libsealc.a
   displayName: 'Build SEAL for iOS (arm64)'
 
 - task: CopyFiles@2
